@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_LastSelectedProfileId>C:\Users\kawak\source\repos\MLTDABD-Rel\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Update="src\AssetStudioGUI\AssetStudioGUIForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="src\AssetStudioGUI\Components\GOHierarchy.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="src\AssetStudioGUI\ExportOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="src\Forms\UserControls\AssetTreeList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="src\Forms\UserControls\ATL.ListViewItemSorter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="src\Forms\UserControls\ATL.TreeNodeSorter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="src\Forms\UserControls\ATL.TreeOrList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="src\Forms\UserControls\ExpListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="src\Forms\UserControls\ExpTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="src\Forms\FormAbout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="src\Forms\FormAsset.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="src\Forms\FormAssetDownload.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="src\Forms\FormDiff.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="src\Forms\FormDownload.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="src\Forms\FormDownload.Worker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="src\Forms\FormInfoViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="src\Forms\FormInfoViewerAssetDownload.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="src\Forms\FormMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+</Project>
