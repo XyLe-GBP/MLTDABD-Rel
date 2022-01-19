@@ -1,13 +1,18 @@
+---
+title: "test"
+tags: ""
+---
+
 # MLTD Asset Bundle Downloader Reloaded
 
 Tool to download and extract MLTD asset bundles.
 
-![Downloads](https://img.shields.io/github/downloads/XyLe-GBP/MLTDABD-Reloaded/total.svg)
-[![GitHub (pre-)release](https://img.shields.io/github/release/XyLe-GBP/MLTDABD-Reloaded/all.svg)](https://github.com/XyLe-GBP/MLTDABD-Reloaded/releases)
+![Downloads](https://img.shields.io/github/downloads/XyLe-GBP/MLTDABD-Rel/total.svg)
+[![GitHub (pre-)release](https://img.shields.io/github/release/XyLe-GBP/MLTDABD-Rel/all.svg)](https://github.com/XyLe-GBP/MLTDABD-Reloaded/releases)
 
 **Downloads:**
 
-- [Releases](https://github.com/XyLe-GBP/MLTDABD-Reloaded/releases)
+- [Releases](https://github.com/XyLe-GBP/MLTDABD-Rel/releases)
 
 Since this application has already been published, it can be run without runtime.  
 
