@@ -349,4 +349,8 @@ namespace MLTDABD.Forms
         TreeView = 1,
 
     }
+
+    public sealed class Utils
+    {
+    }
 }

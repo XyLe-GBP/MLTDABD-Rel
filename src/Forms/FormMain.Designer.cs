@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.mainMenu1 = new System.Windows.Forms.MenuStrip();
             this.mnuFile = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuFileOpen = new System.Windows.Forms.ToolStripMenuItem();
@@ -78,7 +79,7 @@
             this.mnuFileOpenLocal,
             this.mnuFileOpenRemote});
             this.mnuFileOpen.Name = "mnuFileOpen";
-            this.mnuFileOpen.Size = new System.Drawing.Size(180, 22);
+            this.mnuFileOpen.Size = new System.Drawing.Size(177, 22);
             this.mnuFileOpen.Text = "&Open";
             // 
             // mnuFileOpenLocal
@@ -98,19 +99,19 @@
             // mnuDLManifest
             // 
             this.mnuDLManifest.Name = "mnuDLManifest";
-            this.mnuDLManifest.Size = new System.Drawing.Size(180, 22);
+            this.mnuDLManifest.Size = new System.Drawing.Size(177, 22);
             this.mnuDLManifest.Text = "Download Manifest";
             this.mnuDLManifest.Click += new System.EventHandler(this.MnuDLManifest_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(174, 6);
             // 
             // mnuExit
             // 
             this.mnuExit.Name = "mnuExit";
-            this.mnuExit.Size = new System.Drawing.Size(180, 22);
+            this.mnuExit.Size = new System.Drawing.Size(177, 22);
             this.mnuExit.Text = "&Exit";
             this.mnuExit.Click += new System.EventHandler(this.MnuExit_Click);
             // 
@@ -127,21 +128,21 @@
             // mnuToolsDiff
             // 
             this.mnuToolsDiff.Name = "mnuToolsDiff";
-            this.mnuToolsDiff.Size = new System.Drawing.Size(180, 22);
+            this.mnuToolsDiff.Size = new System.Drawing.Size(136, 22);
             this.mnuToolsDiff.Text = "Di&ff..";
             this.mnuToolsDiff.Click += new System.EventHandler(this.MnuToolsDiff_Click);
             // 
             // mnuToolsIV
             // 
             this.mnuToolsIV.Name = "mnuToolsIV";
-            this.mnuToolsIV.Size = new System.Drawing.Size(180, 22);
+            this.mnuToolsIV.Size = new System.Drawing.Size(136, 22);
             this.mnuToolsIV.Text = "Info Viewer";
             this.mnuToolsIV.Click += new System.EventHandler(this.MnuToolsIV_Click);
             // 
             // mnuToolsAS
             // 
             this.mnuToolsAS.Name = "mnuToolsAS";
-            this.mnuToolsAS.Size = new System.Drawing.Size(180, 22);
+            this.mnuToolsAS.Size = new System.Drawing.Size(136, 22);
             this.mnuToolsAS.Text = "AssetStudio";
             this.mnuToolsAS.Click += new System.EventHandler(this.mnuToolsAS_Click);
             // 
@@ -162,7 +163,7 @@
             // mnuHelpAbout
             // 
             this.mnuHelpAbout.Name = "mnuHelpAbout";
-            this.mnuHelpAbout.Size = new System.Drawing.Size(180, 22);
+            this.mnuHelpAbout.Size = new System.Drawing.Size(107, 22);
             this.mnuHelpAbout.Text = "&About";
             this.mnuHelpAbout.Click += new System.EventHandler(this.MnuHelpAbout_Click);
             // 
@@ -172,6 +173,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1143, 698);
             this.Controls.Add(this.mainMenu1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.mainMenu1;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);

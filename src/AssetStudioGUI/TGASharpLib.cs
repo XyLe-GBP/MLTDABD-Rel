@@ -4440,11 +4440,11 @@ namespace TGASharpLib
 
     public class TGA : ICloneable
     {
-        public TgaHeader Header = new TgaHeader();
-        public TgaImgOrColMap ImageOrColorMapArea = new TgaImgOrColMap();
-        public TgaDevArea DevArea = null;
-        public TgaExtArea ExtArea = null;
-        public TgaFooter Footer = null;
+        public TgaHeader Header = new();
+        public TgaImgOrColMap ImageOrColorMapArea = new();
+        public TgaDevArea DevArea = null!;
+        public TgaExtArea ExtArea = null!;
+        public TgaFooter Footer = null!;
 
         #region TGA Creation, Loading, Saving (all are public, have reference to private metods).
         /// <summary>

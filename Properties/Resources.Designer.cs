@@ -130,6 +130,16 @@ namespace MLTDABD_Rel.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Bitmap ICON {
+            get {
+                object obj = ResourceManager.GetObject("ICON", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Bitmap preview {
             get {
                 object obj = ResourceManager.GetObject("preview", resourceCulture);

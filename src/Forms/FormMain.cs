@@ -51,6 +51,9 @@ namespace MLTDABD_Rel
 
                 Debug.Assert(assetInfoList != null);
 
+                using var waitform = new FormProgress(1);
+                _ = Task.Run(() => waitform.ShowDialog());
+
                 var opening = ManifestOpening.Local(filePath);
 
                 var form = new FormAsset(assetInfoList, opening, null!)
@@ -100,6 +103,9 @@ namespace MLTDABD_Rel
 
             Debug.Assert(assetInfoList != null);
 
+            using var waitform = new FormProgress(1);
+            _ = Task.Run(() => waitform.ShowDialog());
+
             var opening = ManifestOpening.Remote(config.ResourceVersion, config.IsLatest);
 
             var form = new FormAsset(assetInfoList, opening, config)
@@ -122,6 +128,7 @@ namespace MLTDABD_Rel
 
             if (children.Length < 2)
             {
+                MessageBox.Show("The manifest you are comparing is not open.\nPlease open two or more manifests from\n'File'->'Open'->'Local' or 'File'->'Open'->'Remote'.", ApplicationHelper.GetApplicationTitle(), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -175,7 +182,6 @@ namespace MLTDABD_Rel
 
             SaveFileDialog sfd = new()
             {
-                CheckFileExists = true,
                 FileName = config.ResourceVersion.ToString(),
                 Filter = @"Asset Database (*.data)|*.data",
                 OverwritePrompt = true,

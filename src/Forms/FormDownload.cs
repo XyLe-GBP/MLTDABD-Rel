@@ -184,14 +184,14 @@ namespace MLTDABD.Forms
         {
             var progress = (float)(index + 1) / total;
             var progressBarValue = pb.Minimum + (int)((pb.Maximum - pb.Minimum) * progress);
-            pb.Value = progressBarValue;
+            Invoke(new Action(() => pb.Value = progressBarValue));
 
             var percentage = ((int)(progress * 10000)) / 100f;
             var percValStr = percentage.ToString("F2");
             var percentageStr = $"{percValStr}%";
-            lblCurrent.Text = $"{percentageStr}: {fileName}";
+            Invoke(new Action(() => lblCurrent.Text = $"{percentageStr}: {fileName}"));
 
-            lvState.Items[index].Text = "√";
+            Invoke(new Action(() => lvState.Items[index].Text = "√"));
         }
 
         private (bool, string) ValidateFields()
@@ -285,8 +285,9 @@ namespace MLTDABD.Forms
 
         private void OnAllDownloadsComplete(bool successful)
         {
-            btnGo.Enabled = false;
-            btnCancel.Enabled = false;
+            Invoke(new Action(() => btnGo.Enabled = false));
+            Invoke(new Action(() => btnCancel.Enabled = false));
+            System.Media.SystemSounds.Asterisk.Play();
         }
 
         [NotNull, ItemNotNull]

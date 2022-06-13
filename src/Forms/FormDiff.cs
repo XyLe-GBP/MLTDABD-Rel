@@ -1,25 +1,21 @@
 ﻿using JetBrains.Annotations;
 using MLTD;
 using MLTD.Assets;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace MLTDABD.Forms
 {
     public partial class FormDiff : Form
     {
+        [NotNull, ItemNotNull]
+        private readonly HashSet<ListViewItem> _downloadPendingSet;
+        [CanBeNull]
+        private DownloadConfig _downloadConfig;
 
         public FormDiff([NotNull, ItemNotNull] FormAsset[] manifestForms)
         {
             _manifestForms = manifestForms;
+            _downloadPendingSet = new HashSet<ListViewItem>();
 
             InitializeComponent();
             RegisterEventHandlers();
@@ -32,18 +28,18 @@ namespace MLTDABD.Forms
 
         private void RegisterEventHandlers()
         {
-            Load += FDiff_Load;
-            Resize += FDiff_Resize;
-            btnDiff.Click += BtnDiff_Click;
-            btnSaveDiff.Click += BtnSaveDiff_Click;
+            Load += FDiff_Load!;
+            Resize += FDiff_Resize!;
+            btnDiff.Click += BtnDiff_Click!;
+            btnSaveDiff.Click += BtnSaveDiff_Click!;
         }
 
         private void UnregisterEventHandlers()
         {
-            Load -= FDiff_Load;
-            Resize -= FDiff_Resize;
-            btnDiff.Click -= BtnDiff_Click;
-            btnSaveDiff.Click -= BtnSaveDiff_Click;
+            Load -= FDiff_Load!;
+            Resize -= FDiff_Resize!;
+            btnDiff.Click -= BtnDiff_Click!;
+            btnSaveDiff.Click -= BtnSaveDiff_Click!;
         }
 
         private void FDiff_Load(object sender, EventArgs e)
@@ -104,6 +100,9 @@ namespace MLTDABD.Forms
                 MessageBox.Show("Please select two different files to diff.", ApplicationHelper.GetApplicationTitle(), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
+            using var waitform = new FormProgress(1);
+            _ = Task.Run(() => waitform.ShowDialog());
 
             _diffSources = (comboBox1.Text, comboBox2.Text);
 
@@ -319,7 +318,7 @@ namespace MLTDABD.Forms
             {
             }
 
-            public bool Equals(AssetInfo x, AssetInfo y)
+            public bool Equals(AssetInfo? x, AssetInfo? y)
             {
                 if (ReferenceEquals(x, null))
                 {
@@ -370,5 +369,181 @@ namespace MLTDABD.Forms
 
         }
 
+        private void ctxAPD_Click(object sender, EventArgs e)
+        {
+            AddSelectedItemsToPendingDownloads();
+        }
+
+        private void ctxRemove_Click(object sender, EventArgs e)
+        {
+            var itemCollection = lvDownload.SelectedItems;
+            var itemCount = itemCollection.Count;
+
+            if (itemCount == 0)
+            {
+                return;
+            }
+
+            if (itemCount == 1)
+            {
+                var item = itemCollection[0];
+                var tag = item.Tag as ListViewItem;
+                Debug.Assert(tag != null);
+                _downloadPendingSet.Remove(tag);
+                lvDownload.Items.RemoveAt(item.Index);
+
+                return;
+            }
+
+            var itemArray = new ListViewItem[itemCount];
+
+            for (var i = 0; i < itemCount; i += 1)
+            {
+                itemArray[i] = itemCollection[i];
+            }
+
+            foreach (var item in itemArray)
+            {
+                var tag = item.Tag as ListViewItem;
+                Debug.Assert(tag != null);
+                _downloadPendingSet.Remove(tag);
+                lvDownload.Items.Remove(item);
+            }
+        }
+
+        private void ctxClear_Click(object sender, EventArgs e)
+        {
+            ClearPendingDownloads();
+        }
+
+        private void lvDiff_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left && lvDiff.SelectedItems.Count > 0)
+            {
+                AddSelectedItemsToPendingDownloads();
+            }
+        }
+
+        private void lvDiff_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right && lvDiff.SelectedItems.Count > 0)
+            {
+                ctxL.Show(lvDiff, e.Location);
+            }
+        }
+
+        private void AddSelectedItemsToPendingDownloads()
+        {
+            var items = lvDiff.SelectedItems;
+            var set = _downloadPendingSet;
+            var lv = lvDownload;
+
+            List<AssetInfo> assetInfos = new List<AssetInfo>(DifftoAssetInfo(items));
+            AssetInfoList assetInfoList = new(assetInfos);
+            
+
+            lv.BeginUpdate();
+
+            foreach (ListViewItem item in items)
+            {
+                AssetInfo assetInfo = new(item.SubItems[1].Text, item.SubItems[3].Text, item.SubItems[2].Text, uint.Parse(item.SubItems[4].Text));
+                TreeListItem treeListItem = new(assetInfo);
+                if (set.Contains(item))
+                {
+                    continue;
+                }
+                
+
+                set.Add(item);
+
+                var lvi = new ListViewItem(treeListItem.LocalName);
+                lvi.SubItems.Add(MathUtilities.GetHumanReadableFileSize(treeListItem.Size));
+                lvi.Tag = treeListItem;
+
+                lv.Items.Add(lvi);
+            }
+
+            lv.EndUpdate();
+        }
+
+        private List<AssetInfo> DifftoAssetInfo(ListView.SelectedListViewItemCollection items)
+        {
+            List<AssetInfo> result = new List<AssetInfo>();
+            foreach (ListViewItem item in items)
+            {
+                AssetInfo assetInfo = new(item.SubItems[1].Text,item.SubItems[3].Text,item.SubItems[2].Text,uint.Parse(item.SubItems[4].Text));
+                result.Add(assetInfo);
+            }
+            return result;
+        }
+
+        private void ClearPendingDownloads()
+        {
+            lvDownload.Items.Clear();
+            _downloadPendingSet.Clear();
+        }
+
+        private void lvDownload_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Right)
+            {
+                return;
+            }
+
+            ctxRemove.Enabled = lvDownload.SelectedItems.Count > 0;
+            ctxDL.Enabled = lvDownload.SelectedItems.Count > 0;
+
+            ctxR.Show(lvDownload, e.Location);
+        }
+
+        private void ctxDL_Click(object sender, EventArgs e)
+        {
+            var listItems = lvDownload.Items;
+
+            if (listItems.Count == 0)
+            {
+                return;
+            }
+
+            _downloadConfig = _manifestForms[comboBox2.SelectedIndex]._downloadConfig;
+
+            if (_downloadConfig == null)
+            {
+                const string message = "You are trying to download assets according to a local manifest. You can only perform this when you know the exact details of the manifest (resource version, engine version, platform info, etc.) otherwise it always fails.\nAgain, only proceed if you understand exactly what you are doing. Do you want to continue?";
+                var r = MessageBox.Show(message, ApplicationHelper.GetApplicationTitle(), MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                if (r == DialogResult.No)
+                {
+                    return;
+                }
+                else
+                {
+                    MessageBox.Show("Download has been suspended.", ApplicationHelper.GetApplicationTitle(), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+            else
+            {
+                var items = new TreeListItem[listItems.Count];
+
+                for (var i = 0; i < items.Length; i += 1)
+                {
+                    items[i] = listItems[i].Tag as TreeListItem;
+                }
+
+                using var f = new FormDownload(items, _downloadConfig);
+                f.ShowDialog(this);
+            }
+        }
+
+        private void lvDiff_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lvDiff.SelectedItems.Count > 0)
+            {
+                int idx = 0;
+                idx = lvDiff.SelectedItems[0].Index;
+                //assetTreeList1.Selecte.;
+            }
+        }
     }
 }

@@ -9,12 +9,20 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+    <ApplicationIcon>Properties\ICON_256.ico</ApplicationIcon>
+    <AssemblyVersion>1.1.2220.613</AssemblyVersion>
+    <FileVersion>1.1.2220.613</FileVersion>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Include="src\APIs\Main\Matsurihi\.MeCommon\LVersion.cs" />
     <Compile Include="src\APIs\Main\Matsurihi\.MeCommon\RVersion.cs" />
     <Compile Include="src\APIs\Main\Matsurihi\.MeCommon\Version.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Properties\ICON_256.ico" />
   </ItemGroup>
 
   <ItemGroup>

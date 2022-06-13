@@ -442,7 +442,7 @@ namespace MLTDABD.Forms
         private readonly ManifestOpening _opening;
 
         [CanBeNull]
-        private readonly DownloadConfig _downloadConfig;
+        public readonly DownloadConfig _downloadConfig;
 
         [NotNull, ItemNotNull]
         private readonly HashSet<TreeListItem> _downloadPendingSet;
